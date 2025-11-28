@@ -1,0 +1,47 @@
+# Environment and secrets
+.env
+*.env
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+
+# MLflow
+mlruns/
+mlruns_amlops/
+mlflow.db
+mlflow_amlops.db
+mlartifacts/
+
+# Model artifacts
+*.joblib
+*.pkl
+tour_model.joblib
+
+# Data files (except required ones)
+*.csv
+!tourism.csv
+
+# Jupyter
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+*.log

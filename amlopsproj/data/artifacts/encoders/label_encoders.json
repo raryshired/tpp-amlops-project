@@ -1,0 +1,36 @@
+{
+  "TypeofContact": [
+    "Company Invited",
+    "Self Enquiry"
+  ],
+  "Occupation": [
+    "Free Lancer",
+    "Large Business",
+    "Salaried",
+    "Small Business"
+  ],
+  "Gender": [
+    "Female",
+    "Male"
+  ],
+  "ProductPitched": [
+    "Basic",
+    "Deluxe",
+    "King",
+    "Standard",
+    "Super Deluxe"
+  ],
+  "MaritalStatus": [
+    "Divorced",
+    "Married",
+    "Single",
+    "Unmarried"
+  ],
+  "Designation": [
+    "AVP",
+    "Executive",
+    "Manager",
+    "Senior Manager",
+    "VP"
+  ]
+}
