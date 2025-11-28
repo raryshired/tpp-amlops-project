@@ -27,6 +27,7 @@ tour_model.joblib
 # Data files (except required ones)
 *.csv
 !tourism.csv
+*.md
 
 # Jupyter
 .ipynb_checkpoints/
