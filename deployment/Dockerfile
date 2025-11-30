@@ -1,22 +1,21 @@
-# Python base image
-FROM python:3.9-slim
 
-ENV PYTHONDONTWRITEBYTECODE=1     PYTHONUNBUFFERED=1     HF_HOME=/home/user/.cache/huggingface
+FROM python:3.11-slim
 
-WORKDIR /app
-
-RUN apt-get update && apt-get install -y --no-install-recommends git && rm -rf /var/lib/apt/lists/*
-
-COPY requirements.txt ./requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
-
+# Create non-root user that matches Spaces runtime (uid 1000), set HOME
 RUN useradd -m -u 1000 user
 USER user
-ENV HOME=/home/user     PATH=/home/user/.local/bin:$PATH
+ENV HOME=/home/user PATH=/home/user/.local/bin:$PATH
+WORKDIR $HOME/app
 
-WORKDIR /app
+# Install dependencies as the user
+COPY --chown=user requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-COPY --chown=user:user app.py ./app.py
+# Copy app code with correct ownership
+COPY --chown=user . .
 
 EXPOSE 8501
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+
+ENTRYPOINT ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.enableXsrfProtection=false"]
+
+# NOTE: Disable XSRF protection for easier external access in order to make batch predictions
