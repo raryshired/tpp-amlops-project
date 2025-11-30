@@ -14,12 +14,15 @@ ENCODER_JSON = "artifacts/encoders/label_encoders.json"
 LOCAL_ENCODER_DIR = Path(os.getenv("LOCAL_ENCODER_DIR", "/app/encoders"))
 ALT_LOCAL_ENCODER_DIR = Path("./amlopsproj/data/artifacts/encoders")
 
+# Get HF_TOKEN from environment for authenticated downloads
+HF_TOKEN = os.getenv("HF_TOKEN")
+
 def try_local(path: Path):
     return path if path.exists() else None
 
 @st.cache_resource(show_spinner=False)
 def load_model():
-    model_path = hf_hub_download(repo_id=MODEL_REPO, filename=MODEL_FILENAME)
+    model_path = hf_hub_download(repo_id=MODEL_REPO, filename=MODEL_FILENAME, token=HF_TOKEN)
     return joblib.load(model_path)
 
 @st.cache_resource(show_spinner=False)
@@ -35,8 +38,8 @@ def load_encoders():
             mappings = json.load(f)
         st.info(f"Loaded encoders locally from {pkl_local.parent}")
         return encoders, mappings
-    enc_path = hf_hub_download(repo_id=ENCODER_REPO, filename=ENCODER_PKL)
-    mapping_path = hf_hub_download(repo_id=ENCODER_REPO, filename=ENCODER_JSON)
+    enc_path = hf_hub_download(repo_id=ENCODER_REPO, filename=ENCODER_PKL, token=HF_TOKEN)
+    mapping_path = hf_hub_download(repo_id=ENCODER_REPO, filename=ENCODER_JSON, token=HF_TOKEN)
     encoders = joblib.load(enc_path)
     with open(mapping_path, "r") as f:
         mappings = json.load(f)
