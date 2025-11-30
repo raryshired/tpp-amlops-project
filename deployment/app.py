@@ -38,8 +38,8 @@ def load_encoders():
             mappings = json.load(f)
         st.info(f"Loaded encoders locally from {pkl_local.parent}")
         return encoders, mappings
-    enc_path = hf_hub_download(repo_id=ENCODER_REPO, filename=ENCODER_PKL, token=HF_TOKEN)
-    mapping_path = hf_hub_download(repo_id=ENCODER_REPO, filename=ENCODER_JSON, token=HF_TOKEN)
+    enc_path = hf_hub_download(repo_id=ENCODER_REPO, filename=ENCODER_PKL, repo_type="dataset", token=HF_TOKEN)
+    mapping_path = hf_hub_download(repo_id=ENCODER_REPO, filename=ENCODER_JSON, repo_type="dataset", token=HF_TOKEN)
     encoders = joblib.load(enc_path)
     with open(mapping_path, "r") as f:
         mappings = json.load(f)
