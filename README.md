@@ -25,7 +25,7 @@ End-to-end MLOps pipeline for predicting customer purchases using XGBoost with a
 │   ├── Dockerfile
 │   └── requirements.txt
 ├── .github/workflows/pipeline.yml
-├── push_to_space.py
+├── hf_space_hosting.py
 └── README.md
 ```
 

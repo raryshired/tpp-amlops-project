@@ -83,4 +83,4 @@ jobs:
       - name: Deploy to Hugging Face Space
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        run: python push_to_space.py
+        run: python hf_space_hosting.py
