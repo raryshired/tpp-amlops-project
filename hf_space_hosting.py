@@ -12,6 +12,7 @@ DEPLOY_DIR = "deployment"
 
 api = HfApi(token=HF_TOKEN)
 
+"""
 # Check/create space
 try:
     api.repo_info(repo_id=SPACE_ID, repo_type="space")
@@ -23,7 +24,9 @@ except Exception:
     except Exception as e:
         print(f"Failed to create space: {e}")
         sys.exit(1)
+"""
 
+# Create the HF Streamlit Space manually
 # Upload deployment folder
 print("Uploading deployment folder...")
 try:
