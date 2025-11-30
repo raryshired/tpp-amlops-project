@@ -18,7 +18,7 @@ try:
     print(f"Space {SPACE_ID} exists. Skipping creation.")
 except Exception:
     try:
-        api.create_repo(repo_id=SPACE_ID, repo_type="space", space_sdk="docker", private=False, exist_ok=True)
+        api.create_repo(repo_id=SPACE_ID, repo_type="space", space_sdk="streamlit", private=False, exist_ok=True)
         print(f"Space {SPACE_ID} created.")
     except Exception as e:
         print(f"Failed to create space: {e}")
