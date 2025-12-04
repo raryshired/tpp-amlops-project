@@ -24,8 +24,11 @@ End-to-end MLOps pipeline for predicting customer purchases using XGBoost with a
 │   ├── app.py
 │   ├── Dockerfile
 │   └── requirements.txt
-├── .github/workflows/pipeline.yml
+├── .github/workflows/
+│   └── pipeline.yml
 ├── hf_space_hosting.py
+├── requirements-pipeline.txt
+├── tourism.csv
 └── README.md
 ```
 
@@ -42,11 +45,11 @@ python amlopsproj/model_building/data_register.py
 python amlopsproj/model_building/prep.py
 
 # Train (start MLflow if desired)
-MLFLOW_TRACKING_URI=http://localhost:5001 mlflow ui --host 0.0.0.0 --port 5001 &
+mlflow ui --host 0.0.0.0 --port 5001 &
 python amlopsproj/model_building/train.py
 
 # Docker
-docker build -t tourism-app -f deployment/Dockerfile .
+docker build -t tourism-app -f deployment/Dockerfile deployment/
 docker run -p 8501:8501 -e HF_TOKEN=$HF_TOKEN tourism-app
 ```
 

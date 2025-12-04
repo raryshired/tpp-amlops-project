@@ -27,7 +27,11 @@ tour_model.joblib
 # Data files (except required ones)
 *.csv
 !tourism.csv
-*.md
+
+# Documentation
+!README.md
+screenshots/
+generate_mlops_diagram.py
 
 # Jupyter
 .ipynb_checkpoints/
@@ -46,3 +50,6 @@ Thumbs.db
 
 # Docker
 *.log
+
+# HTML
+*.html
