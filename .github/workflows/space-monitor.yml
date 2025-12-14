@@ -1,0 +1,60 @@
+name: Monitor HuggingFace Space
+
+on:
+  schedule:
+    # Run every 15 minutes
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    # Allow manual trigger
+
+jobs:
+  check-and-restart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: pip install huggingface-hub
+
+      - name: Check Space Status and Restart if Needed
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python << 'EOF'
+          import os
+          import sys
+          from huggingface_hub import HfApi
+
+          SPACE_ID = "spac1ngcat/tour-well-pack-app"
+          HF_TOKEN = os.getenv("HF_TOKEN")
+
+          if not HF_TOKEN:
+              print("Error: HF_TOKEN not set")
+              sys.exit(1)
+
+          api = HfApi(token=HF_TOKEN)
+
+          try:
+              runtime = api.get_space_runtime(SPACE_ID)
+              stage = runtime.stage
+              print(f"Space status: {stage}")
+
+              # Stages that indicate the space is not running properly
+              restart_stages = ["STOPPED", "SLEEPING", "BUILD_ERROR", "RUNTIME_ERROR", "PAUSED"]
+
+              if stage in restart_stages:
+                  print(f"Space is in {stage} state. Restarting...")
+                  api.restart_space(SPACE_ID)
+                  print("Restart triggered successfully!")
+              elif stage == "RUNNING":
+                  print("Space is running. No action needed.")
+              else:
+                  print(f"Space is in {stage} state. Monitoring...")
+
+          except Exception as e:
+              print(f"Error checking space: {e}")
+              sys.exit(1)
+          EOF
