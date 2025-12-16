@@ -3,7 +3,7 @@ name: Monitor HuggingFace Space
 on:
   schedule:
     # Run every 15 minutes
-    - cron: '0 */2 * * *'
+    - cron: '0 */4 * * *'
   workflow_dispatch:
     # Allow manual trigger
 
